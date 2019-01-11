@@ -1,11 +1,61 @@
 
 //const phrase = new Phrase();
 //console.log(`Phrase - phrase: ${phrase.phrase}`);
-const game = new Game();
+let game; 
+const btnStart = document.querySelector("#btn__reset");
+btnStart.addEventListener('click', function() {
+    game = new Game();
+    game.phrases = game.createPhrase();
+    game.startGame();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //game.createPhase();
 
-game.phrases = game.createPhrase();
-game.getRandomPhrase().addPhraseToDisplay();
+// game.phrases = game.createPhrase();
+// game.startGame();
+// console.log(`Active Phrase - phrase: ${game.activePhrase.phrase}`);
+//game.getRandomPhrase().addPhraseToDisplay();
 // game.phrases.forEach((phrase, index) => {
 //     console.log(`Phrase ${index} - phrase ${phrase.phrase}`);
 // })
