@@ -7,6 +7,7 @@ btnStart.addEventListener('click', function() {
     game = new Game();
     game.phrases = game.createPhrase();
     game.startGame();
+
 });
 
 

@@ -27,5 +27,41 @@ class Phrase {
         phraseDiv.appendChild(phraseList);
         return phraseDiv;
     }
+
+    /**
+    * Checks if passed letter is in phrase
+    * @param (string) letter - Letter to check
+    */
+    checkLetter(letter) {
+        if(letter) {
+            return true
+        } else {
+            return false;
+        }
+    }
+    /**
+    * Displays passed letter on screen after a match is found
+    * @param (string) letter - Letter to display
+    */
+    showMatchedLetter(letter) {
+
+        let letters = document.querySelectorAll('.letter');
+        let result = [];
+        for(let i = 0; i < letters.length; i+=1) {
+            result.push(letters[i].textContent);
+
+        }
+        if(result.indexOf(letter)) {
+            console.log('match');
+        }
+        //console.log(result);
+        // for(const char of letters) {
+        //     console.log(char, letter);
+        //     if(letter === char) {
+
+        //     }
+        // }
+        // return console.log(letters);
+    }
     
 }
