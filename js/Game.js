@@ -91,14 +91,26 @@ class Game {
     gameOver(gameWon) {
         let header = document.querySelector('#game-over-message');
         let overlay = document.querySelector('#overlay');
+        const phraseDiv = document.querySelector('#phrase');
+        const phraseList = document.getElementsByTagName('ul')[0];
+        
         if(gameWon) {
             overlay.className = 'win';
             overlay.style.display = 'block';
             header.textContent = "Congratulations, you've won the game!"; 
+            while(phraseList.firstChild) {
+                phraseList.removeChild(phraseList.firstChild);
+            }
+            //phraseDiv.removeChild(phraseList);
         } else {
             overlay.className = 'lose';
             overlay.style.display = 'block';
             header.textContent = 'Game over! You ran out of lives, try again and give it your best shot!';
+            while(phraseList.firstChild) {
+                phraseList.removeChild(phraseList.firstChild);
+                
+            }
+            //phraseDiv.removeChild(phraseList);
         }
     }
 
@@ -118,9 +130,12 @@ class Game {
                 game.gameOver(true);
             }
         } else {
+            button.disabled = true;
             button.className = 'wrong';
             game.removeLife();
             console.log(`Letter ${btnLetter} is not within the phrase`);
+
+
         }
     }
 }
