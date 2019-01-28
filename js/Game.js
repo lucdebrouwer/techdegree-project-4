@@ -12,11 +12,13 @@ class Game {
 
     createPhrase() {
         const phrases = [];
-        phrases.push(new Phrase('First phrase'));
-        phrases.push(new Phrase('Second phrase'));
-        phrases.push(new Phrase('Third phrase'));
-        phrases.push(new Phrase('Fourth phrase'));
-        phrases.push(new Phrase('Fifth phrase'));
+        phrases.push(new Phrase('First play a game'));
+        phrases.push(new Phrase('Three strikes ur out'));
+        phrases.push(new Phrase('Thirthy seconds'));
+        phrases.push(new Phrase('Fourth of july'));
+        phrases.push(new Phrase('Fifth amendment'));
+        phrases.push(new Phrase('Know your meme'));
+        phrases.push(new Phrase('You have been gnomed'));
         return phrases;
  
     }
@@ -53,14 +55,10 @@ class Game {
         let hiddenLetters = document.getElementsByClassName('show');
         let spaces = document.getElementsByClassName('space');
         
-
         for(let i = 0; i < this.activePhrase.phrase.length; i+=1) {
             if(this.activePhrase.phrase.length === (hiddenLetters.length + spaces.length)) {
                 // Uncomment this line to check if phrase length equals to hiddenletters shown length 
                 //console.log(`activephrase length: ${this.activePhrase.phrase.length},  hiddenLetters length: ${hiddenLetters.length + spaces.length}`);
-
-                // End the game, user won
-                //this.gameOver(true);
                 return true;
             } else {
                 return false;
@@ -76,6 +74,7 @@ class Game {
     */
     removeLife() {
         this.missed += 1;
+        // Convert nodeList to array and add class hidden to itl
         const scoreboard = Array.from(document.querySelectorAll('.tries'));
         scoreboard[scoreboard.length - 1].className = 'hidden';
 
@@ -91,22 +90,22 @@ class Game {
     gameOver(gameWon) {
         let header = document.querySelector('#game-over-message');
         let overlay = document.querySelector('#overlay');
-        const phraseDiv = document.querySelector('#phrase');
-        const phraseList = document.getElementsByTagName('ul')[0];
+        const phraseUL = document.querySelector('#phrase ul');
 
         if(gameWon) {
             overlay.className = 'win';
             overlay.style.display = 'block';
             header.textContent = "Congratulations, you've won the game!"; 
 
-            phraseList.innerHTML = '';
-            phraseDiv.removeChild(phraseList);
+            // Reset game if won
+            this.resetGame();
         } else {
             overlay.className = 'lose';
             overlay.style.display = 'block';
             header.textContent = 'Game over! You ran out of lives, try again and give it your best shot!';
-            phraseList.innerHTML = '';
-            phraseDiv.removeChild(phraseList);
+
+            // Reset game if lost
+            this.resetGame(); 
         }
     }
 
@@ -116,9 +115,14 @@ class Game {
      */
     handleInteraction(button) {
         let btnLetter = button.textContent;
-        if(this.activePhrase.checkLetter(btnLetter)) {
-            console.log(`Letter ${btnLetter} is within the phrase`);
 
+        // If letter is in phrase, show it to the user
+        // disable the onscreen letter button
+        // mark as chosen or wrong
+        // End game or remove life
+        if(this.activePhrase.checkLetter(btnLetter)) {
+            // Log to console if letter is in the phrase
+            //console.log(`Letter ${btnLetter} is within the phrase`);
             game.activePhrase.showMatchedLetter(btnLetter);
             button.disabled = true;
             button.className = 'chosen';
@@ -129,10 +133,32 @@ class Game {
             button.disabled = true;
             button.className = 'wrong';
             game.removeLife();
-            console.log(`Letter ${btnLetter} is not within the phrase`);
-
-
+            // Log to console if letter is not in the phrase
+            //console.log(`Letter ${btnLetter} is not within the phrase`);
         }
+    }
+    resetGame() {
+        const phraseUL = document.querySelector('#phrase ul');
+        // Remove all LI elements from the phrase UL
+        while(phraseUL.hasChildNodes()) {
+            phraseUL.removeChild(phraseUL.lastChild);
+        }
+        // Get all buttons, convert nodelist to array and use foreach to access classList
+        // reset class to 'key'
+        const btnLetters = Array.from(document.querySelectorAll('#qwerty button'));
+        btnLetters.forEach(function(button) {
+            button.disabled = false;
+            button.classList.remove('chosen');
+            button.classList.remove('wrong');
+            button.classList.add('key');
+        })
+
+        // Reset lives
+        this.missed = 0;
+        const scoreboard = Array.from(document.querySelectorAll('.hidden'));
+        scoreboard.forEach(function(heart) {
+            heart.className = 'tries';
+        })
     }
 }
 
