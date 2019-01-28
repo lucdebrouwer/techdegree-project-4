@@ -14,7 +14,7 @@ class Game {
         const phrases = [];
         phrases.push(new Phrase('First phrase'));
         phrases.push(new Phrase('Second phrase'));
-        phrases.push(new Phrase("Third phrase"));
+        phrases.push(new Phrase('Third phrase'));
         phrases.push(new Phrase('Fourth phrase'));
         phrases.push(new Phrase('Fifth phrase'));
         return phrases;
@@ -46,6 +46,26 @@ class Game {
     */
     checkForWin() {
 
+        // Retrieve all active letters in phrase
+        // If all letters are shown, checkForWin = true
+        // else checkForWin = false
+        let boardLetters = document.getElementsByClassName('letter');
+        let hiddenLetters = document.getElementsByClassName('show');
+        let spaces = document.getElementsByClassName('space');
+        
+
+        for(let i = 0; i < this.activePhrase.phrase.length; i+=1) {
+            if(this.activePhrase.phrase.length === (hiddenLetters.length + spaces.length)) {
+                // Uncomment this line to check if phrase length equals to hiddenletters shown length 
+                //console.log(`activephrase length: ${this.activePhrase.phrase.length},  hiddenLetters length: ${hiddenLetters.length + spaces.length}`);
+
+                // End the game, user won
+                //this.gameOver(true);
+                return true;
+            } else {
+                return false;
+            }              
+        }
     }
 
 
@@ -55,7 +75,13 @@ class Game {
     * Checks if player has remaining lives and ends game if player is out
     */
     removeLife() {
+        this.missed += 1;
+        const scoreboard = Array.from(document.querySelectorAll('.tries'));
+        scoreboard[scoreboard.length - 1].className = 'hidden';
 
+        if(this.missed === 5) {
+            this.gameOver(false); // GameOver(gameWon) => false
+        }
     }
     
     /**
@@ -63,19 +89,39 @@ class Game {
     * @param {boolean} gameWon - Whether or not the user won the game
     */
     gameOver(gameWon) {
-
+        let header = document.querySelector('#game-over-message');
+        let overlay = document.querySelector('#overlay');
+        if(gameWon) {
+            overlay.className = 'win';
+            overlay.style.display = 'block';
+            header.textContent = "Congratulations, you've won the game!"; 
+        } else {
+            overlay.className = 'lose';
+            overlay.style.display = 'block';
+            header.textContent = 'Game over! You ran out of lives, try again and give it your best shot!';
+        }
     }
 
     /**
-     * Handles game interaction 
+     * Handles onscreen keyboard button clicks
+     * @param (HTMLButtonElement) button - the clicked button element
      */
-    handleInteraction() {
-        // Call each function
-        //checkLetter()
-        //showMatchedLetter()
-        //checkForWin()
-        //removeLife()
-        //gameOver()
+    handleInteraction(button) {
+        let btnLetter = button.textContent;
+        if(this.activePhrase.checkLetter(btnLetter)) {
+            console.log(`Letter ${btnLetter} is within the phrase`);
+
+            game.activePhrase.showMatchedLetter(btnLetter);
+            button.disabled = true;
+            button.className = 'chosen';
+            if(game.checkForWin()) {
+                game.gameOver(true);
+            }
+        } else {
+            button.className = 'wrong';
+            game.removeLife();
+            console.log(`Letter ${btnLetter} is not within the phrase`);
+        }
     }
 }
 

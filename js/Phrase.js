@@ -33,7 +33,8 @@ class Phrase {
     * @param (string) letter - Letter to check
     */
     checkLetter(letter) {
-        if(letter) {
+        let lettersInPhrase = this.phrase;
+        if(lettersInPhrase.includes(letter)) {
             return true
         } else {
             return false;
@@ -46,22 +47,11 @@ class Phrase {
     showMatchedLetter(letter) {
 
         let letters = document.querySelectorAll('.letter');
-        let result = [];
         for(let i = 0; i < letters.length; i+=1) {
-            result.push(letters[i].textContent);
-
+            if(letter === letters[i].textContent) {
+                letters[i].className = 'show';
+            }
         }
-        if(result.indexOf(letter)) {
-            console.log('match');
-        }
-        //console.log(result);
-        // for(const char of letters) {
-        //     console.log(char, letter);
-        //     if(letter === char) {
-
-        //     }
-        // }
-        // return console.log(letters);
     }
     
 }
