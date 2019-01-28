@@ -9,7 +9,9 @@ class Phrase {
     addPhraseToDisplay() {
         const text = this.phrase;
         const phraseDiv = document.querySelector('#phrase');
-        const phraseList = document.createElement('ul');
+        //const phraseList = document.createElement('ul');
+        const phraseList = document.createElement('ul');     
+        
 
         // Uses an ES6 method to iterate over an array to find each character of the phrase
         // Returns a list of characters which will be appended to the phrase div
