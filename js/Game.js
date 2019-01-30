@@ -19,6 +19,11 @@ class Game {
         phrases.push(new Phrase('Fifth amendment'));
         phrases.push(new Phrase('Know your meme'));
         phrases.push(new Phrase('You have been gnomed'));
+        phrases.push(new Phrase('Master JavaScript'));
+        phrases.push(new Phrase('Persistence is key'));
+        phrases.push(new Phrase('Make your dreams come true'));
+        phrases.push(new Phrase('All or nothing'));
+        phrases.push(new Phrase('Ready to take it all tonight'));
         return phrases;
  
     }
@@ -58,7 +63,7 @@ class Game {
         for(let i = 0; i < this.activePhrase.phrase.length; i+=1) {
             if(this.activePhrase.phrase.length === (hiddenLetters.length + spaces.length)) {
                 // Uncomment this line to check if phrase length equals to hiddenletters shown length 
-                //console.log(`activephrase length: ${this.activePhrase.phrase.length},  hiddenLetters length: ${hiddenLetters.length + spaces.length}`);
+                console.log(`activephrase length: ${this.activePhrase.phrase.length},  hiddenLetters length: ${hiddenLetters.length + spaces.length}`);
                 return true;
             } else {
                 return false;
@@ -74,7 +79,7 @@ class Game {
     */
     removeLife() {
         this.missed += 1;
-        // Convert nodeList to array and add class hidden to itl
+        // Convert nodeList to array and add class hidden
         const scoreboard = Array.from(document.querySelectorAll('.tries'));
         scoreboard[scoreboard.length - 1].className = 'hidden';
 
@@ -122,7 +127,7 @@ class Game {
         // End game or remove life
         if(this.activePhrase.checkLetter(btnLetter)) {
             // Log to console if letter is in the phrase
-            //console.log(`Letter ${btnLetter} is within the phrase`);
+            console.log(`Letter ${btnLetter} is within the phrase`);
             game.activePhrase.showMatchedLetter(btnLetter);
             button.disabled = true;
             button.className = 'chosen';
@@ -134,7 +139,7 @@ class Game {
             button.className = 'wrong';
             game.removeLife();
             // Log to console if letter is not in the phrase
-            //console.log(`Letter ${btnLetter} is not within the phrase`);
+            console.log(`Letter ${btnLetter} is not within the phrase`);
         }
     }
     resetGame() {

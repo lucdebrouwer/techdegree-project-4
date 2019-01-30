@@ -1,6 +1,3 @@
-
-//const phrase = new Phrase();
-//console.log(`Phrase - phrase: ${phrase.phrase}`);
 let game; 
 const btnStart = document.querySelector("#btn__reset");
 btnStart.addEventListener('click', function() {
@@ -26,7 +23,6 @@ keyButtons.addEventListener('click', e => {
     }
 
 })
-
 
 
 
